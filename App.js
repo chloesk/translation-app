@@ -1,27 +1,45 @@
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import { getLocales } from "expo-localization";
-import { I18n } from "i18n-js";
-
-// Set the key-value pairs for the different languages you want to support.
-const i18n = new I18n({
-  en: { welcome: "Hello" },
-  ko: { welcome: "안녕" },
-  ja: { welcome: "こんにちは" },
-});
-
-// Set the locale once at the beginning of your app.
-i18n.locale = getLocales()[0].languageCode;
-
-console.log(i18n.t("welcome"));
-const deviceLanguage = getLocales()[0].languageCode;
+import { useTranslation } from "./src/use-translation";
+import Button from "./src/components/Button";
+import { useRandomPhrase } from "./src/components/RandomPhrase";
 
 export default function App() {
+  const { t, locale, setLocale } = useTranslation();
+  const { cookieKey } = useRandomPhrase();
+
+  if (locale === null) return null;
+
   return (
     <View style={styles.container}>
-      <Text>{deviceLanguage}</Text>
-      <Text>{i18n.t("welcome")}</Text>
-      <StatusBar style="auto" />
+      <Text>{t(cookieKey)}</Text>
+
+      <View style={styles.buttonsContainer}>
+        <Button
+          onPress={() => setLocale("ko")}
+          isSelected={locale === "ko"}
+          text="KO"
+        />
+        <Button
+          onPress={() => setLocale("en")}
+          isSelected={locale === "en"}
+          text="EN"
+        />
+        <Button
+          onPress={() => setLocale("es")}
+          isSelected={locale === "es"}
+          text="ES"
+        />
+        <Button
+          onPress={() => setLocale("ja")}
+          isSelected={locale === "ja"}
+          text="JA"
+        />
+        <Button
+          onPress={() => setLocale("zh")}
+          isSelected={locale === "zh"}
+          text="ZH"
+        />
+      </View>
     </View>
   );
 }
@@ -29,8 +47,12 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
+    backgroundColor: "pink",
     alignItems: "center",
     justifyContent: "center",
+  },
+  buttonsContainer: {
+    flexDirection: "row",
   },
 });
