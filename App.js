@@ -2,10 +2,20 @@ import { StyleSheet, Text, View } from "react-native";
 import { useTranslation } from "./src/use-translation";
 import Button from "./src/components/Button";
 import { useRandomPhrase } from "./src/components/RandomPhrase";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect } from "react";
+
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const { t, locale, setLocale } = useTranslation();
   const { cookieKey } = useRandomPhrase();
+
+  useEffect(() => {
+    setTimeout(() => {
+      SplashScreen.hideAsync();
+    }, 2000);
+  }, []);
 
   if (locale === null) return null;
 
