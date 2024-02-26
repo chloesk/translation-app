@@ -13,7 +13,9 @@ export const useRandomPhrase = () => {
 
   useEffect(() => {
     const randomCookieKey = getRandomCookieKey();
-    setCookieKey(randomCookieKey);
+    setTimeout(() => {
+      setCookieKey(randomCookieKey);
+    }, 2000);
   }, []);
 
   return {
